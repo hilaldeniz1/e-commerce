@@ -6,6 +6,7 @@ const closeBtn = document.querySelector("#close");
 const modal = document.querySelector(".modal-wrapper");
 const basketList = document.querySelector("#list");
 const totalSpan = document.querySelector("#total-price");
+const totalCount = document.querySelector("#count");
 
 // !apı ıslemlerı
 // html'in yüklenme anı
@@ -116,8 +117,6 @@ function addToBasket(product) {
   // ürün sepete daha önce eklendi mi ?
   const found = basket.find((i) => i.id === product.id);
 
-  console.log(found);
-
   if (found) {
     // eleman sepette var > miktarı arttır
     found.amount++;
@@ -139,7 +138,7 @@ function renderBasket() {
   <h3 class="title">${product.title}</h3>
   <h4 class="price">${product.price} &#8378;</h4>
   <p>Miktar: ${product.amount}</p>
-  <img id="delete" src="/images/e-trash.png.png" />
+  <img onclick="deleteItem(${product.id})" id="delete" src="/images/e-trash.png.png" />
 </div>
   
   `
@@ -152,11 +151,29 @@ function renderBasket() {
   calculateTotal();
 }
 
-// sepet toplamı ayarlama
+// sepette toplam bölümünü ayarlama
 function calculateTotal() {
-  // toplamı hesaplama
-  const sum = basket.reduce((sum, i) => sum + i.price, 0);
+  // toplam fiyatı hesaplama
+  const sum = basket.reduce((sum, i) => sum + i.price * i.amount, 0);
+
+  // ürün miktarını hesaplama
+  const amount = basket.reduce((sum, i) => sum + i.amount, 0);
+
+  // miktarı html e gonderme
+  totalCount.innerText = amount + " " + "Ürün";
 
   // toplam degeri html e gonderme
   totalSpan.innerText = sum;
+}
+
+// sepetten ürünü silme fonksiyonu
+function deleteItem(deleteid) {
+  // kaldırılacak ürün dısındakı butun urunlerı al
+  basket = basket.filter((i) => i.id !== deleteid);
+
+  // listeyi güncelle
+  renderBasket();
+
+  // toplamı guncelle
+  calculateTotal();
 }

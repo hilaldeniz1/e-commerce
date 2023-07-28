@@ -44,3 +44,15 @@
 - - yoksa sepet dizisine ekle
 
 - modal acılınca modal ıcersıne elemanları listele
+
+- sepetten ürün cıkarma
+
+- - çöp butonuna tıklanınca bir fonksiyon calıstır
+
+- - fonksıyon: silinecek ürünün bilgisini alma
+
+- - ürünü `basket dizisinden` kaldır
+
+- - ekrandaki ürün listesini güncelle
+
+- - toplam bilgisini güncelle
