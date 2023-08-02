@@ -1,5 +1,9 @@
 # E-Ticaret
 
+### 'Screen'
+
+![](screen-ecommerce.gif)
+
 # Kaynaklar
 
 - Api: https://fakeapi.platzi.com/

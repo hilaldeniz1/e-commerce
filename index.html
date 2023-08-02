@@ -7,42 +7,60 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- Üst Kısım -->
+    <!-- header section START -->
     <header>
       <h1>E-Ticaret</h1>
-      <input type="text" placeholder="ürün ismi giriniz.." />
-      <div>
+      <input type="text" placeholder="ürün ismi giriniz" />
+      <div class="buttons">
+        <div id="dark-mode-toggle" class="toggle-btn"></div>
         <button id="basket">Sepet</button>
-        <button>Kayıtol</button>
+        <button id="register-btn">KayıtOl</button>
         <button>Giriş Yap</button>
       </div>
     </header>
-    <!--  Ana İçerik -->
+    <!-- header section START -->
+
+    <!--  main section START -->
     <main>
-      <!-- Kategoriler -->
+      <!-- Categories section -->
       <section id="category-sec">
-        <h1>Kategoriler</h1>
+        <h1>Categories</h1>
         <div class="categories"></div>
       </section>
-      <!-- Ürünler -->
+
+      <!-- Products -->
       <section>
         <h1>Ürünler</h1>
         <div class="products"></div>
       </section>
     </main>
+    <!--  main section END -->
 
-    <!-- madal(sepet penceresi) -->
+    <!-- Modal Basket START -->
     <div class="modal-wrapper">
       <div class="modal">
         <div id="icon">
-          <img id="close" src="/images/e-close.png.png" />
+          <img id="close" src="images/e-close.png.png" alt="" />
         </div>
         <div id="list"></div>
         <p id="total">
-          <span id="count">0 ürün</span>Toplam:
-          <span id="total-price">0</span> &#8378;
+          <span id="count">0 Ürün</span> Total:
+          <span id="total-price">0 $</span>
         </p>
       </div>
+    </div>
+    <!-- Modal Basket END -->
+
+    <div class="registers">
+      <section id="register-sec">
+        <h1>KAYIT OL</h1>
+        <form id="register-form">
+          <input class="input-info" type="text" placeholder="kullanıcı adı" />
+          <input class="input-info" type="email" placeholder="e-posta adresi" />
+          <input class="input-info" type="password" placeholder="şifre" />
+          <button id="register-btns" type="submit">kayıt ol</button>
+        </form>
+      </section>
     </div>
 
     <script src="main.js"></script>

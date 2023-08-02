@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
 * {
   margin: 0;
@@ -14,9 +15,13 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding: 10px 50px;
   /* grabient.com */
   background-image: linear-gradient(45deg, #ffdee9 0%, #b5fffc 100%);
+}
+header .buttons {
+  display: flex;
+  align-items: center !important;
 }
 header h1 {
   text-shadow: 0 0 30px #b5fffc;
@@ -37,45 +42,43 @@ header div button {
   cursor: pointer;
   color: white;
 }
-
-header div button:nth-child(1) {
+header div button:nth-child(2) {
   background: black;
 }
-header div button:nth-child(2) {
+header div button:nth-child(3) {
   background: blue;
 }
-header div button:nth-child(3) {
+header div button:nth-child(4) {
   background: red;
 }
 
 /* kategoriler */
-
 section {
   padding: 50px;
 }
-
-.categories {
+section h1 {
+  text-align: start !important;
+}
+section .categories {
   display: flex;
   justify-content: space-between;
   gap: 40px;
   margin-top: 40px;
 }
-
-.category-card {
+section .categories .category-card {
   max-width: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   box-shadow: 0 0 30px rgba(20, 20, 20, 0.231);
+  border-radius: 10px;
 }
-
-.category-card img {
+section .categories .category-card img {
   width: 100%;
   border-radius: 10px;
 }
-
-.category-card p {
+section .categories .category-card p {
   position: absolute;
   bottom: 10px;
   background: white;
@@ -95,34 +98,36 @@ section {
   gap: 120px;
   margin-top: 40px;
 }
-
 @media (max-width: 1100px) {
   .products {
     justify-content: center;
     gap: 40px;
   }
 }
-
-.card {
+.products .card {
   max-width: 250px;
+  max-height: 500px;
+  min-height: 380px;
   padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   border-radius: 10px;
+  position: relative;
   /*  https://getcssscan.com/css-box-shadow-examples*/
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
     rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
     rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
-
-.card img {
+.products .card img {
   width: 100%;
   border-radius: 10px;
+  height: 250px;
+  -o-object-fit: cover;
+  object-fit: cover;
 }
-
-.card .action {
+.products .card .action {
   width: 100%;
   padding: 7px;
   display: flex;
@@ -131,11 +136,15 @@ section {
   background: black;
   border-radius: 10px;
   align-items: center;
+  position: absolute;
+  bottom: 2px;
+  width: 98%;
+  margin: 0 auto;
 }
-.card .action span {
+.products .card .action span {
   color: greenyellow;
 }
-.card .action button {
+.products .card .action button {
   background-image: linear-gradient(180deg, #a9c9ff 0%, #ffbbec 100%);
   border-radius: 4px;
   color: white;
@@ -147,13 +156,11 @@ section {
   cursor: pointer;
   transition: scale 300ms;
 }
-
-.card .action button:hover {
+.products .card .action button:hover {
   scale: 0.96;
 }
 
 /* sepet */
-
 .modal-wrapper {
   width: 100%;
   height: 100vh;
@@ -164,11 +171,10 @@ section {
   display: none;
   place-items: center;
 }
-.active {
+.modal-wrapper.active {
   display: grid;
 }
-
-.modal {
+.modal-wrapper .modal {
   background: white;
   width: 70%;
   height: 60%;
@@ -178,22 +184,19 @@ section {
   flex-direction: column;
   gap: 50px;
 }
-
-.modal #icon {
+.modal-wrapper .modal #icon {
   display: flex;
   justify-content: end;
 }
-.modal #icon img {
+.modal-wrapper .modal #icon img {
   width: 40px;
   cursor: pointer;
   transition: all 0.4s;
 }
-
-.modal #icon img:hover {
+.modal-wrapper .modal #icon img:hover {
   scale: 0.87;
 }
-
-.modal #list {
+.modal-wrapper .modal #list {
   display: flex;
   flex-direction: column;
   /* butun alanı kapşamasını saglar */
@@ -203,7 +206,7 @@ section {
   gap: 30px;
   padding: 14px;
 }
-.modal #list .item {
+.modal-wrapper .modal #list .item {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -212,32 +215,152 @@ section {
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
     rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
-.modal #list .item img {
+.modal-wrapper .modal #list .item img {
   width: 60px;
   border-radius: 7px;
 }
-.item .title {
-}
-.item .price {
+.modal-wrapper .modal #list .item .price {
   color: green;
 }
-.modal #list .item p {
-}
-.modal #list .item #delete {
+.modal-wrapper .modal #list .item #delete {
   width: 30px;
   cursor: pointer;
   transition: all 0.4s;
 }
-
-.modal #delete:hover {
+.modal-wrapper .modal #list .item #delete:hover {
   transform: rotate(15deg);
 }
-
-.modal #total {
+.modal-wrapper .modal #list #total {
   text-align: center;
 }
-
-.modal #total span {
+.modal-wrapper .modal #list #total span {
   color: rgb(0, 203, 0);
   font-weight: bold;
 }
+
+.registers {
+  width: 80%;
+  height: 80vh;
+  position: fixed;
+  top: 35%;
+  left: 40%;
+  display: grid;
+  place-items: center;
+  margin: auto;
+  display: none;
+}
+@media (max-width: 1000px) {
+  .registers {
+    top: 25%;
+    left: 25%;
+  }
+}
+.registers #register-sec {
+  background: white;
+  width: 500px;
+  height: 60%;
+  border-radius: 10px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+.registers #register-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  margin: 0 auto;
+}
+.registers #register-form input {
+  margin-bottom: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+.registers #register-form button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.registers #register-form button:hover {
+  background-color: blueviolet;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: #9fccfa;
+  border-radius: 50px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.toggle-btn {
+  width: 40px;
+  height: 20px;
+  background: #d3d3d3;
+  border-radius: 50px;
+  cursor: pointer;
+  position: relative;
+}
+.toggle-btn::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+.dark-mode .toggle-btn {
+  background: #333;
+  transition: all 0.2s;
+}
+.dark-mode .toggle-btn::after {
+  transform: translateX(20px);
+  transition: all 0.2s;
+}
+
+.dark-mode .registers #register-sec {
+  background-color: rgb(48, 46, 46);
+}
+.dark-mode .registers #register-sec input {
+  outline: none;
+}
+.dark-mode h1 {
+  color: white;
+  text-align: center;
+}
+.dark-mode header {
+  background: black;
+  color: white;
+  transition: all 0.3s;
+}
+.dark-mode header div button:nth-child(2) {
+  background: white;
+  color: black;
+  transition: all 0.3s;
+}
+.dark-mode main {
+  background: rgba(0, 0, 0, 0.959);
+  transition: all 0.3s;
+}
+.dark-mode .card {
+  box-shadow: 0 0 30px rgba(238, 232, 232, 0.231);
+}
+.dark-mode .card .action {
+  background: white;
+}
+.dark-mode .card span {
+  color: rgb(11, 15, 3) !important;
+  font-weight: 600;
+}
+.dark-mode .card h4 {
+  color: white;
+} /*# sourceMappingURL=style.css.map */

@@ -1,4 +1,4 @@
-//  html den gelenler
+//! HTML'den gelenler
 const categoryList = document.querySelector(".categories");
 const productsArea = document.querySelector(".products");
 const basketBtn = document.querySelector("#basket");
@@ -7,101 +7,113 @@ const modal = document.querySelector(".modal-wrapper");
 const basketList = document.querySelector("#list");
 const totalSpan = document.querySelector("#total-price");
 const totalCount = document.querySelector("#count");
+const registerBtn = document.querySelector("#register-btn");
+const registerSection = document.querySelector(".registers");
+const ball = document.querySelector("#dark-mode-toggle");
 
-// !apı ıslemlerı
-// html'in yüklenme anı
-document.addEventListener("DOMContentLoaded", () => {
-  fetchCategories();
-  fetchProducts();
+// kayıt ol alanı
+registerBtn.addEventListener("click", () => {
+  registerSection.style.display = "block";
 });
 
-// yaptığımız ,isteklerin tamamında buulunur:
+//! API işlemleri
+//! HTML'in yükleme anı
+document.addEventListener("DOMContentLoaded", () => {
+  fetchCategories(), fetchProducts();
+});
+
+// yaptığımız isteklerin url'sini değişkene tanıttık
 const baseUrl = "https://api.escuelajs.co/api/v1";
 
-/*
- * kategori bilgilerini alma
- * 1- Api'ye istek at
- * 2- gelen veriyi işle
- * 3- gelen verileri kart şeklinde ekrana basıcak fonksiyonu çalıştır
- * 4- cevab hatalı olursa kullanıcıyı bilgilendir
- */
+//TODO  Kategori bilgilerini alma
+// 1- Api'ye istek at
+// 2- Gelen veriyi işle
+// 3- Gelen verileri kart şeklinde ekrana basacak fonkstiyonu çalıştır
+// 4- Cevap hatalı olursa kullanıcıyı bilgilendir.
 
+//Todo kategoriler için istek atma
 function fetchCategories() {
   fetch(`${baseUrl}/categories`)
-    // eğerki cevapolumlu gelirse çalışır
+    // eğer cevap olumlu gelirse çalışır
     .then((res) => res.json())
-    // veri json formatına dönünce çalışır
+    // veri JSON formayına dönünce çalışır
     .then((data) => renderCategories(data.slice(1, 5)))
-    // cevapta hata varsa çalışır
+    // cevapta hata varsa burası çalışır
     .catch((err) => console.log(err));
 }
 
+//Todo kategorileri ekrana basma
 function renderCategories(categories) {
-  // kategoriler dizisindeki herbir obje için çalışır
+  // kategoriler dizisindeki her bir obje için ekrana kart basma
   categories.forEach((category) => {
     // 1- div oluşturma
     const categoryDiv = document.createElement("div");
 
-    // 2- dive class ekleme
+    // 2- div'e class ekleme
     categoryDiv.classList.add("category-card");
-    // 3- divin içeriğini belirleme
+
+    // 3- div'in içeriğini belirleme
     categoryDiv.innerHTML = `
-    <img src=${category.image} />
-    <p>${category.name}</p>
-    `;
-    // 4- elemanı htmlde categories div'ine ekleme
+        <img src=${category.image}>
+        <p>${category.name}</p>
+        `;
+
+    // 4- elemanı HTML categories div'ine ekleme
     categoryList.appendChild(categoryDiv);
   });
 }
 
-// ürünler icin istek at
+//Todo ürünler için istek atma
 async function fetchProducts() {
   try {
-    // istegi atar
     const res = await fetch(`${baseUrl}/products`);
     const data = await res.json();
-    renderProducts(data.slice(0, 25));
-  } catch (err) {
+    renderProducts(data.slice(1, 26));
     // hata olursa yakalar
+  } catch (err) {
     console.log(err);
   }
 }
 
-// ürünleri ekrana basar
+//Todo ürünleri ekrana basma
 function renderProducts(products) {
-  // her bir ürün icin kart html i olustur ve diziye aktar
+  // her bir ürün için kart HTML'i oluştur ve diziye aktar
   const productsHTML = products
     .map(
       (product) => `
- <div class="card">
- <img src=${product.images[0]} >
- <h4>${product.title}</h4>
- <h4>${product.category.name ? product.category.name : "Diğer"}</h4>
- <div class="action">
-   <span>${product.price} &#8378;</span>
-   <button onclick="addToBasket(
-    {id:${product.id},title:'${product.title}',price:${product.price},img:'${
+   <div class="card">
+    <img src=${product.images[0]} alt="">
+    <h4>${product.title}</h4>
+    <h4>${product.category.name ? product.category.name : "Others"}</h4>
+    <div class="action">
+       <span>${product.price} $</span>
+       <button onclick="addToBasket({id:${product.id},title:'${
+        product.title
+      }', price:${product.price}, img:'${
         product.images[0]
       }',amount:1})">Sepete Ekle</button>
- </div>
-</div>
- `
+    </div>
+    </div>
+    
+   `
     )
-    //  dizi seklindeki veriyi virgülleri kaldırarak stringe donusturur
+    // dizi şeklindeki verinin virgüllerini kaldırarak string'e dönüştürür
     .join(" ");
-  // ürünler html ini listeye gönder
+
+  // Ürünler html'ini listeye gönderme
   productsArea.innerHTML += productsHTML;
 }
 
-// sepet degişkenleri
+// Sepet değişkenleri
 let basket = [];
 let total = 0;
 
-//! modal işlemleri
+//! Modal işlemleri
 basketBtn.addEventListener("click", () => {
-  // sepeti acma
+  // sepeti açma
   modal.classList.add("active");
-  // sepete ürünleri listeleme
+
+  // Sepete ürünleri listeleme
   renderBasket();
 });
 
@@ -110,48 +122,44 @@ closeBtn.addEventListener("click", () => {
   modal.classList.remove("active");
 });
 
-// ! sepet işlemleri
-
-// seppete ekleme işlemi
+//! Basket(sepet) işlemleri
+// sepete ekleme işlemi
 function addToBasket(product) {
-  // ürün sepete daha önce eklendi mi ?
+  // ürün sepete  daha önce eklendi mi?
   const found = basket.find((i) => i.id === product.id);
-
+  // evet sepette var ve miktarı arttır
   if (found) {
-    // eleman sepette var > miktarı arttır
     found.amount++;
   } else {
-    // eleman sepette yok > sepete ekle
-
+    // eleman sepette yok ve sepete ekle
     basket.push(product);
   }
-  console.log(basket);
 }
 
-// sepete elemanları listeleme
+// Sepete elemanları listeleme
 function renderBasket() {
-  // kartları olusturma
   const cardsHTML = basket
     .map(
-      (product) => ` <div class="item">
-  <img src=${product.img} />
-  <h3 class="title">${product.title}</h3>
-  <h4 class="price">${product.price} &#8378;</h4>
-  <p>Miktar: ${product.amount}</p>
-  <img onclick="deleteItem(${product.id})" id="delete" src="/images/e-trash.png.png" />
-</div>
-  
-  `
+      (product) => `
+    <div class="item">
+        <img src="${product.img}">
+        <h3 class="title">${product.title}</h3>
+        <h4 class="price">${product.price} $</h4>
+        <p>Adet:${product.amount}</p>
+        <img onclick="deleteItem(${product.id})" id="delete" src="images/e-trash.png.png">
+    </div>
+    `
     )
     .join(" ");
 
-  // hazırladıgımız kartları html e gonderme
+  // hazırladığımız kartları HTML'e gönderme
   basketList.innerHTML = cardsHTML;
-  // sepeti toplam degeri hesapla
+
+  // sepet toplam değeri hesaplama
   calculateTotal();
 }
 
-// sepette toplam bölümünü ayarlama
+// Sepet toplamı ayarlama
 function calculateTotal() {
   // toplam fiyatı hesaplama
   const sum = basket.reduce((sum, i) => sum + i.price * i.amount, 0);
@@ -159,21 +167,35 @@ function calculateTotal() {
   // ürün miktarını hesaplama
   const amount = basket.reduce((sum, i) => sum + i.amount, 0);
 
-  // miktarı html e gonderme
+  // miktarı HTML'e gönderme
   totalCount.innerText = amount + " " + "Ürün";
 
-  // toplam degeri html e gonderme
+  // toplam değeri HTML'e gönderme
   totalSpan.innerText = sum;
 }
 
-// sepetten ürünü silme fonksiyonu
+// Sepetten ürünü silme fonksiyonu
 function deleteItem(deleteid) {
-  // kaldırılacak ürün dısındakı butun urunlerı al
+  // kaldırılacak ürün dışındaki bütün ürünleri alma
   basket = basket.filter((i) => i.id !== deleteid);
 
-  // listeyi güncelle
+  // listeyi güncelleme
   renderBasket();
 
-  // toplamı guncelle
+  // toplamı güncelleme
   calculateTotal();
 }
+
+// Kullanıcının karanlık mod tercihini kontrol edin
+const prefersDarkMode = window.matchMedia(
+  "(prefers-color-scheme: dark)"
+).matches;
+const items = document.querySelectorAll(".toggle-btn::after");
+
+// Karanlık ve açık mod arasında geçiş yapacak fonksiyon
+function toggleDarkMode() {
+  document.body.classList.toggle("dark-mode");
+}
+
+// Toggle düğmesine tıklama olayı ekleme
+ball.addEventListener("click", toggleDarkMode);
