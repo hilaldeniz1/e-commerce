@@ -1,5 +1,9 @@
 # E-Ticaret
 
+### 'Deploy'
+
+https://thunderous-kitten-a24f49.netlify.app
+
 ### 'Screen'
 
 ![](screen-ecommerce.gif)
